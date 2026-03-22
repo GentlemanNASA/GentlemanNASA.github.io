@@ -50,15 +50,16 @@ body::before {
 
 /* ── CUSTOM CURSOR ── */
 #cur-dot {
-  position:fixed; width:8px; height:8px; z-index:9999;
+  position:fixed; left:-200px; top:-200px; width:8px; height:8px; z-index:9999;
   background:var(--paper); border-radius:50%; pointer-events:none;
-  transform:translate(-50%,-50%); transition:transform .1s, width .3s, height .3s, background .3s;
+  transform:translate(-50%,-50%);
+  opacity:0; transition:transform .1s, width .3s, height .3s, background .3s, opacity .4s;
 }
 #cur-ring {
-  position:fixed; width:40px; height:40px; z-index:9998;
+  position:fixed; left:-200px; top:-200px; width:40px; height:40px; z-index:9998;
   border:1px solid rgba(240,237,232,.5); border-radius:50%; pointer-events:none;
   transform:translate(-50%,-50%);
-  transition:width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94), border-color .3s, opacity .3s;
+  opacity:0; transition:width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94), border-color .3s, opacity .3s;
 }
 #cur-label {
   position:fixed; z-index:9997; pointer-events:none;
@@ -115,7 +116,7 @@ body.hov-card #cur-ring { width:80px; height:80px; border-color:var(--gold); }
   text-transform:uppercase; color:var(--dim);
   transition:color .25s; position:relative;
 }
-.nav-links a:hover, .nav-links a.active { color:var(--paper); }
+.nav-links a:hover, .nav-links a.active { color:var(--paper) !important; }
 .nav-cta {
   font-family:var(--sans); font-size:.65rem; font-weight:600; letter-spacing:.18em;
   text-transform:uppercase; color:var(--ink); background:var(--paper);
@@ -237,7 +238,7 @@ body.hov-card #cur-ring { width:80px; height:80px; border-color:var(--gold); }
   animation:lineReveal .9s cubic-bezier(.77,0,.175,1) both;
 }
 .h1-word:nth-child(2) { animation-delay:.12s; }
-.h1-word.italic { font-style:italic; color:var(--dim); }
+.h1-word.italic { font-style:italic; color:var(--paper); opacity:.72; }
 @keyframes lineReveal {
   from { transform:translateY(105%); }
   to   { transform:translateY(0); }
@@ -631,7 +632,7 @@ section[id] { scroll-margin-top:80px; }
 .sig-block { text-align:center; margin-top:7rem; padding:4rem; border-top:1px solid var(--border); }
 .sig-main {
   font-family:var(--mono); font-size:clamp(2rem,5.5vw,5.5rem); font-weight:400;
-  letter-spacing:.08em; line-height:1; color:rgba(240,237,232,.07); margin-bottom:1rem;
+  letter-spacing:.08em; line-height:1; color:rgba(240,237,232,.12); margin-bottom:1rem;
   position:relative;
 }
 .sig-main::before, .sig-main::after {
@@ -639,8 +640,8 @@ section[id] { scroll-margin-top:80px; }
   font-family:var(--mono); font-size:inherit; font-weight:inherit; letter-spacing:inherit;
   pointer-events:none;
 }
-.sig-main::before { color:rgba(79,111,255,.04); animation:glitchA 9s steps(1) infinite; clip-path:polygon(0 20%,100% 20%,100% 35%,0 35%); }
-.sig-main::after  { color:rgba(0,194,255,.04); animation:glitchB 9s steps(1) infinite; clip-path:polygon(0 60%,100% 60%,100% 72%,0 72%); }
+.sig-main::before { color:rgba(79,111,255,.22); animation:glitchA 9s steps(1) infinite; clip-path:polygon(0 20%,100% 20%,100% 35%,0 35%); }
+.sig-main::after  { color:rgba(0,194,255,.22); animation:glitchB 9s steps(1) infinite; clip-path:polygon(0 60%,100% 60%,100% 72%,0 72%); }
 @keyframes glitchA {
   0%,90%,100%{transform:translate(0)}
   92%{transform:translate(-4px,1px);color:rgba(200,169,110,.07)}
@@ -859,7 +860,7 @@ footer { padding:2.5rem 3.5rem; border-top:1px solid var(--border); background:v
 </div>
 
 <nav id="nav" aria-label="Main navigation">
-  <div class="nav-logo">Kurios<span style="-webkit-text-fill-color:var(--gold);background:none">_NASA</span> <sup>GH</sup></div>
+  <div class="nav-logo">Kurios<span style="color:var(--gold)">_NASA</span> <sup>GH</sup></div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -912,7 +913,7 @@ footer { padding:2.5rem 3.5rem; border-top:1px solid var(--border); background:v
   </div>
 
   <div class="hero-content">
-    <div class="hero-eyebrow"><span style="color:var(--paper);letter-spacing:.15em">Kurios_NASA</span> &nbsp;·&nbsp; Accra &nbsp;·&nbsp; GCTU &nbsp;·&nbsp; 2026</div>
+    <div class="hero-eyebrow"><span style="color:var(--paper);letter-spacing:.15em;font-weight:600">Kurios_NASA</span> &nbsp;·&nbsp; Accra &nbsp;·&nbsp; GCTU &nbsp;·&nbsp; 2026</div>
     <h1 class="hero-h1">
       <span class="h1-line"><span class="h1-word">Samuel</span></span>
       <span class="h1-line"><span class="h1-word italic">Nii</span></span>
@@ -1172,7 +1173,7 @@ footer { padding:2.5rem 3.5rem; border-top:1px solid var(--border); background:v
         <h2 class="contact-cta">Let's work<br><em>together.</em></h2>
         <p class="contact-sub">If you're working in security, need a driven learner on your team, or want to collaborate on CTF challenges — <strong>I want to hear from you.</strong></p>
         <div class="contact-btns">
-          <a href="/cdn-cgi/l/email-protection#c8a9a4a4a7bcadb1bba9a5bdada4a6a1a188afa5a9a1a4e6aba7a5" class="btn-solid">Send an email</a>
+          <a href="mailto:alloteysamuelnii@gmail.com" class="btn-solid">Send an email</a>
           <a href="javascript:void(0)" onclick="window.print()" class="btn-outline">Download CV</a>
         </div>
       </div>
@@ -1186,7 +1187,7 @@ footer { padding:2.5rem 3.5rem; border-top:1px solid var(--border); background:v
             <div class="soc-l"><div class="soc-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div><div class="soc-name">LinkedIn</div><div class="soc-handle">samuel-nii-adotei-allotey-5526b6230</div></div></div>
             <div class="soc-arrow">&nearr;</div>
           </a>
-          <a href="/cdn-cgi/l/email-protection#08696464677c6d717b69657d6d64666161486f65696164266b6765" class="soc-item">
+          <a href="mailto:alloteysamuelnii@gmail.com" class="soc-item">
             <div class="soc-l"><div class="soc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="soc-name">Email</div><div class="soc-handle"><span class="__cf_email__" data-cfemail="42232e2e2d36273b31232f37272e2c2b2b02252f232b2e6c212d2f">[email&#160;protected]</span></div></div></div>
             <div class="soc-arrow">&nearr;</div>
           </a>
@@ -1228,10 +1229,15 @@ footer { padding:2.5rem 3.5rem; border-top:1px solid var(--border); background:v
 /* ═══ CURSOR ═══ */
 const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring'),label=document.getElementById('cur-label');
 let mx=0,my=0,rx=0,ry=0;
+let cursorVisible=false;
 document.addEventListener('mousemove',e=>{
   mx=e.clientX;my=e.clientY;
   dot.style.left=mx+'px';dot.style.top=my+'px';
   label.style.left=mx+'px';label.style.top=my+'px';
+  if(!cursorVisible){
+    cursorVisible=true;
+    dot.style.opacity='1';ring.style.opacity='1';
+  }
 });
 (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
 document.querySelectorAll('a,button,.nav-cta').forEach(el=>{
@@ -1262,8 +1268,11 @@ window.addEventListener('scroll',()=>btt.classList.toggle('show',window.scrollY>
 btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 
 /* ═══ REVEAL ═══ */
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.08});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.05,rootMargin:'0px 0px -20px 0px'});
+const revEls=document.querySelectorAll('.reveal');
+revEls.forEach(el=>obs.observe(el));
+// Fallback: force all visible after 3s in case observer misfires
+setTimeout(()=>revEls.forEach(el=>el.classList.add('in')), 3000);
 
 /* ═══ TIMELINE ═══ */
 const tlObs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*120);tlObs.unobserve(e.target)}})},{threshold:.1});
@@ -1338,4 +1347,9 @@ if(track){
   });
   // Touch drag
   let tStart=0, sStart=0;
-  track.addEventListener('touchstart', e=>{ tStart=e.touches[0].clie
+    track.addEventListener('touchstart', e=>{ tStart=e.touches[0].clientX; sStart=track.scrollLeft; }, {passive:true});
+  track.addEventListener('touchmove',  e=>{ track.scrollLeft = sStart-(e.touches[0].clientX-tStart)*1.2; }, {passive:true});
+})();
+</script>
+</body>
+</html>
