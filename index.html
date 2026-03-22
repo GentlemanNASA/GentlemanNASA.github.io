@@ -43,20 +43,20 @@ a { color:inherit; text-decoration:none; }
 
 /* ── GRAIN TEXTURE OVERLAY ── */
 body::before {
-  content:''; position:fixed; inset:0; z-index:9000; pointer-events:none;
+  content:''; position:fixed; inset:0; z-index:1; pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
   opacity:.028; mix-blend-mode:overlay;
 }
 
 /* ── CUSTOM CURSOR ── */
 #cur-dot {
-  position:fixed; left:-200px; top:-200px; width:8px; height:8px; z-index:9999;
+  position:fixed; left:-9999px; top:-9999px; width:8px; height:8px; z-index:9999;
   background:var(--paper); border-radius:50%; pointer-events:none;
   transform:translate(-50%,-50%);
   transition:transform .1s, width .3s, height .3s, background .3s;
 }
 #cur-ring {
-  position:fixed; left:-200px; top:-200px; width:40px; height:40px; z-index:9998;
+  position:fixed; left:-9999px; top:-9999px; width:40px; height:40px; z-index:9998;
   border:1px solid rgba(240,237,232,.5); border-radius:50%; pointer-events:none;
   transform:translate(-50%,-50%);
   transition:width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94), border-color .3s;
@@ -633,7 +633,7 @@ section[id] { scroll-margin-top:80px; }
 .sig-block { text-align:center; margin-top:7rem; padding:4rem; border-top:1px solid var(--border); }
 .sig-main {
   font-family:var(--mono); font-size:clamp(2rem,5.5vw,5.5rem); font-weight:400;
-  letter-spacing:.08em; line-height:1; color:rgba(240,237,232,.12); margin-bottom:1rem;
+  letter-spacing:.08em; line-height:1; color:rgba(240,237,232,.35); margin-bottom:1rem;
   position:relative;
 }
 .sig-main::before, .sig-main::after {
@@ -716,6 +716,7 @@ footer { padding:2.5rem 3.5rem; border-top:1px solid var(--border); background:v
   .hero-grid::before{display:none}
   .marquee-strip{display:none}
   #nav{top:0}
+  .hero-has-photo #hero{padding-right:1.5rem}
 }
 @media(max-width:500px){
   .hero-h1{font-size:3.2rem}
@@ -832,9 +833,7 @@ footer { padding:2.5rem 3.5rem; border-top:1px solid var(--border); background:v
   .hero-photo-wrap { display: none; }
   .hero-has-photo #hero { padding-right: 3.5rem; }
 }
-@media(max-width:768px){
-  .hero-has-photo #hero { padding-right: 1.5rem; }
-}
+
 
 
 /* ── REDUCED MOTION FALLBACK ── */
