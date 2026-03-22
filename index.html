@@ -969,6 +969,204 @@ footer { padding:2.5rem 3.5rem; border-top:1px solid var(--border); background:v
   100% { stroke-dashoffset: -1; opacity: .3; }
 }
 
+
+/* ═══════════════════════════════════════════════
+   MOBILE ANIMATION SYSTEM
+   All animations use transform/opacity only —
+   no layout-triggering properties = 60fps on phone
+════════════════════════════════════════════════ */
+
+/* ── Base: tighter reveal on mobile (less travel) ── */
+@media(max-width:768px){
+  .reveal {
+    transform:translateY(20px);
+    transition:opacity .6s cubic-bezier(.25,.46,.45,.94),
+               transform .6s cubic-bezier(.25,.46,.45,.94);
+  }
+  .reveal.in { opacity:1; transform:translateY(0); }
+}
+
+/* ── Staggered children — items animate in sequence ── */
+.stagger-children > *     { opacity:0; transform:translateY(18px); transition:opacity .5s cubic-bezier(.25,.46,.45,.94), transform .5s cubic-bezier(.25,.46,.45,.94); }
+.stagger-children > *.in  { opacity:1; transform:translateY(0); }
+.stagger-children > *:nth-child(1)  { transition-delay:.05s; }
+.stagger-children > *:nth-child(2)  { transition-delay:.12s; }
+.stagger-children > *:nth-child(3)  { transition-delay:.19s; }
+.stagger-children > *:nth-child(4)  { transition-delay:.26s; }
+.stagger-children > *:nth-child(5)  { transition-delay:.33s; }
+.stagger-children > *:nth-child(6)  { transition-delay:.40s; }
+.stagger-children > *:nth-child(7)  { transition-delay:.47s; }
+.stagger-children > *:nth-child(8)  { transition-delay:.54s; }
+.stagger-children > *:nth-child(9)  { transition-delay:.61s; }
+.stagger-children > *:nth-child(10) { transition-delay:.68s; }
+.stagger-children > *:nth-child(n+11){ transition-delay:.72s; }
+
+/* ── Slide-from-left (section eyebrows, labels) ── */
+.slide-left {
+  opacity:0; transform:translateX(-24px);
+  transition:opacity .55s cubic-bezier(.25,.46,.45,.94),
+             transform .55s cubic-bezier(.25,.46,.45,.94);
+}
+.slide-left.in { opacity:1; transform:translateX(0); }
+
+/* ── Scale-in (stat numbers, achievement numbers) ── */
+.scale-in {
+  opacity:0; transform:scale(.88);
+  transition:opacity .5s cubic-bezier(.34,1.56,.64,1),
+             transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+.scale-in.in { opacity:1; transform:scale(1); }
+
+/* ── Flip-up (timeline items on mobile) ── */
+.flip-up {
+  opacity:0; transform:translateY(28px) rotateX(8deg);
+  transform-origin:top center;
+  transition:opacity .55s cubic-bezier(.25,.46,.45,.94),
+             transform .55s cubic-bezier(.25,.46,.45,.94);
+}
+.flip-up.in { opacity:1; transform:translateY(0) rotateX(0); }
+
+/* ── Mobile tap feedback ── */
+@media(max-width:768px){
+  .proj-card:active, .lead-card-new:active, .soc-item:active,
+  .cert-item:active, .ach-item:active, .soft-item:active,
+  .skill-item:active {
+    transform:scale(.97);
+    transition:transform .12s ease;
+  }
+  .btn-solid:active  { transform:scale(.95); transition:transform .1s ease; }
+  .btn-outline:active{ transform:scale(.95); transition:transform .1s ease; }
+}
+
+/* ── Breathing glow on profile card (mobile) ── */
+@media(max-width:768px){
+  .profile-card {
+    animation:cardBreath 5s ease-in-out infinite;
+  }
+  @keyframes cardBreath {
+    0%,100% { box-shadow:0 0 0 1px rgba(200,169,110,.1); }
+    50%      { box-shadow:0 0 28px rgba(200,169,110,.18), 0 0 0 1px rgba(200,169,110,.2); }
+  }
+}
+
+/* ── Animated underline on nav links (mobile menu) ── */
+#mob-menu a {
+  position:relative; display:inline-block;
+}
+#mob-menu a::after {
+  content:''; position:absolute; bottom:-4px; left:0;
+  width:0; height:2px; background:var(--gold);
+  transition:width .35s cubic-bezier(.25,.46,.45,.94);
+}
+#mob-menu a:hover::after,
+#mob-menu a:focus::after { width:100%; }
+
+/* ── Skill tag shimmer on mobile ── */
+@media(max-width:768px){
+  .skill-item {
+    position:relative; overflow:hidden;
+  }
+  .skill-item::after {
+    content:''; position:absolute; top:0; left:-100%;
+    width:60%; height:100%;
+    background:linear-gradient(90deg, transparent, rgba(200,169,110,.08), transparent);
+    transition:left .4s ease;
+  }
+  .skill-item.in::after { left:120%; transition:left .6s ease .2s; }
+}
+
+/* ── Cert row slide-in left ── */
+.cert-item {
+  transition:padding-left .25s, border-color .25s, background .25s,
+             opacity .5s cubic-bezier(.25,.46,.45,.94),
+             transform .5s cubic-bezier(.25,.46,.45,.94);
+}
+
+/* ── Counter animation on stat numbers ── */
+.stat-n, .hero-stat-num {
+  display:inline-block;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+.stat-n.counted, .hero-stat-num.counted {
+  animation:numPop .45s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes numPop {
+  0%   { transform:scale(.7); opacity:0; }
+  60%  { transform:scale(1.12); }
+  100% { transform:scale(1); opacity:1; }
+}
+
+/* ── Hero badge pulse ring ── */
+.hero-badge {
+  animation:badgeFadeIn 1s .4s both;
+}
+@keyframes badgeFadeIn {
+  from { opacity:0; transform:translateY(-8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── Sect eyebrow line draw ── */
+.sect-eyebrow {
+  overflow:hidden;
+}
+.sect-eyebrow::before {
+  transition:width .6s cubic-bezier(.25,.46,.45,.94) .2s;
+  width:0;
+}
+.sect-eyebrow.in::before { width:30px; }
+
+/* ── Pentest card glow pulse ── */
+.pentest-full {
+  animation:pentestPulse 6s ease-in-out infinite;
+}
+@keyframes pentestPulse {
+  0%,100% { border-color:rgba(200,169,110,.2); }
+  50%      { border-color:rgba(200,169,110,.45); box-shadow:0 0 30px rgba(200,169,110,.08); }
+}
+
+/* ── Gold dot living pulse in hero badge ── */
+.badge-pulse {
+  animation:badgeDot 2s ease-in-out infinite;
+}
+@keyframes badgeDot {
+  0%,100% { transform:scale(1); box-shadow:0 0 0 0 rgba(74,222,128,.5); }
+  50%      { transform:scale(1.15); box-shadow:0 0 0 6px rgba(74,222,128,0); }
+}
+
+/* ── Section title word-by-word appear ── */
+.sect-title-anim span {
+  display:inline-block;
+  opacity:0; transform:translateY(16px);
+  transition:opacity .5s cubic-bezier(.25,.46,.45,.94),
+             transform .5s cubic-bezier(.25,.46,.45,.94);
+}
+.sect-title-anim.in span { opacity:1; transform:translateY(0); }
+.sect-title-anim.in span:nth-child(1) { transition-delay:.05s; }
+.sect-title-anim.in span:nth-child(2) { transition-delay:.15s; }
+.sect-title-anim.in span:nth-child(3) { transition-delay:.25s; }
+
+/* ── Progress line on tl-item ── */
+.tl-item .tl-card {
+  transition:border-color .3s, transform .3s, box-shadow .3s;
+}
+@media(max-width:768px){
+  .tl-item.in .tl-card {
+    animation:tlCardIn .5s cubic-bezier(.25,.46,.45,.94) both;
+  }
+  @keyframes tlCardIn {
+    from { opacity:.4; transform:translateX(-12px); }
+    to   { opacity:1; transform:translateX(0); }
+  }
+}
+
+/* ── Footer fade up ── */
+footer {
+  opacity:0; transform:translateY(16px);
+  transition:opacity .7s cubic-bezier(.25,.46,.45,.94),
+             transform .7s cubic-bezier(.25,.46,.45,.94);
+}
+footer.in { opacity:1; transform:translateY(0); }
+
 </style>
 </head>
 <body>
@@ -1560,6 +1758,158 @@ if(track){
         track.addEventListener('touchstart', e=>{ tStart=e.touches[0].clientX; sStart=track.scrollLeft; }, {passive:true});
   track.addEventListener('touchmove',  e=>{ track.scrollLeft = sStart-(e.touches[0].clientX-tStart)*1.2; }, {passive:true});
 })();
+
+
+/* ═══════════════════════════════════════════════
+   MOBILE ANIMATIONS JS
+════════════════════════════════════════════════ */
+(function(){
+
+  // ── Universal observer factory ──
+  function makeObs(threshold, fn){
+    return new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ fn(e.target); } });
+    },{threshold, rootMargin:'0px 0px -40px 0px'});
+  }
+
+  // ── 1. Stagger children on skills cloud, cert list, social list ──
+  document.querySelectorAll('.skills-cloud,.social-stack,.certs-wrap,.skills-layout > div').forEach(el=>{
+    el.classList.add('stagger-children');
+  });
+  const staggerObs = makeObs(.05, el=>{
+    el.querySelectorAll(':scope > *').forEach(child=>child.classList.add('in'));
+    staggerObs.unobserve(el);
+  });
+  document.querySelectorAll('.stagger-children').forEach(el=>staggerObs.observe(el));
+
+  // ── 2. slide-left on all sect-eyebrow ──
+  document.querySelectorAll('.sect-eyebrow,.sect-num').forEach(el=>{
+    el.classList.add('slide-left');
+  });
+  const slideObs = makeObs(.1, el=>{ el.classList.add('in'); slideObs.unobserve(el); });
+  document.querySelectorAll('.slide-left').forEach(el=>slideObs.observe(el));
+
+  // ── 3. scale-in on stat numbers + achievement numbers ──
+  document.querySelectorAll('.stat-item,.ach-item,.hero-stat-num').forEach(el=>{
+    el.classList.add('scale-in');
+  });
+  const scaleObs = makeObs(.15, el=>{ el.classList.add('in'); scaleObs.unobserve(el); });
+  document.querySelectorAll('.scale-in').forEach(el=>scaleObs.observe(el));
+
+  // ── 4. numPop + counter on stat numbers ──
+  const counterObs = makeObs(.2, el=>{
+    const numEl = el.querySelector ? (el.querySelector('.stat-n') || el.querySelector('.ach-n') || el) : el;
+    if(numEl && !numEl.dataset.counted){
+      numEl.dataset.counted = '1';
+      numEl.classList.add('counted');
+    }
+    counterObs.unobserve(el);
+  });
+  document.querySelectorAll('.stat-item,.ach-item').forEach(el=>counterObs.observe(el));
+
+  // ── 5. flip-up on timeline cards ──
+  document.querySelectorAll('.tl-card').forEach(el=>el.classList.add('flip-up'));
+  const flipObs = makeObs(.1, el=>{ el.classList.add('in'); flipObs.unobserve(el); });
+  document.querySelectorAll('.flip-up').forEach(el=>flipObs.observe(el));
+
+  // ── 6. cert items: slide in staggered ──
+  const certObs = new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>{
+          e.target.style.opacity='1';
+          e.target.style.transform='translateX(0)';
+          e.target.style.borderLeftColor='rgba(200,169,110,.3)';
+        }, i * 60);
+        certObs.unobserve(e.target);
+      }
+    });
+  },{threshold:.05});
+  document.querySelectorAll('.cert-item').forEach(el=>{
+    el.style.opacity='0';
+    el.style.transform='translateX(-16px)';
+    el.style.transition='opacity .45s ease, transform .45s ease, padding-left .25s, border-color .5s';
+    certObs.observe(el);
+  });
+
+  // ── 7. sect-title: wrap lines in spans for word animation ──
+  document.querySelectorAll('.sect-title').forEach(el=>{
+    if(el.dataset.animated) return;
+    el.dataset.animated='1';
+    // Split on <br> and text nodes
+    const html = el.innerHTML;
+    const parts = html.split(/(<br\s*\/?>|<em>[^<]*<\/em>)/gi);
+    el.classList.add('sect-title-anim');
+    el.innerHTML = parts.map(p=>{
+      if(p.match(/^<br/i)) return p;
+      if(p.match(/^<em>/i)) return `<span>${p}</span>`;
+      const words = p.split(/(\s+)/);
+      return words.map(w=>w.trim() ? `<span>${w}</span>` : w).join('');
+    }).join('');
+  });
+  const titleObs = makeObs(.1, el=>{ el.classList.add('in'); titleObs.unobserve(el); });
+  document.querySelectorAll('.sect-title-anim').forEach(el=>titleObs.observe(el));
+
+  // ── 8. footer observer ──
+  const footerObs = makeObs(.05, el=>{ el.classList.add('in'); footerObs.unobserve(el); });
+  const footer = document.querySelector('footer');
+  if(footer) footerObs.observe(footer);
+
+  // ── 9. proj-cards: on mobile, add touch ripple ──
+  if('ontouchstart' in window){
+    document.querySelectorAll('.proj-card,.lead-card-new,.soc-item,.cert-item').forEach(el=>{
+      el.addEventListener('touchstart', function(e){
+        this.style.transition='transform .1s ease';
+      },{passive:true});
+      el.addEventListener('touchend', function(){
+        setTimeout(()=>{ this.style.transition=''; }, 150);
+      },{passive:true});
+    });
+  }
+
+  // ── 10. Smooth scroll for mobile with visual feedback ──
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', function(e){
+      const target = document.querySelector(this.getAttribute('href'));
+      if(!target) return;
+      // brief visual pulse on target section
+      target.style.transition='opacity .15s';
+      target.style.opacity='.85';
+      setTimeout(()=>{ target.style.opacity=''; target.style.transition=''; }, 300);
+    });
+  });
+
+  // ── 11. Sect eyebrow in-observer ──
+  const eyebrowObs = makeObs(.15, el=>{
+    el.classList.add('in');
+    eyebrowObs.unobserve(el);
+  });
+  document.querySelectorAll('.sect-eyebrow').forEach(el=>eyebrowObs.observe(el));
+
+  // ── 12. Soft skills: stagger on mobile ──
+  const softObs = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){
+      entries[0].target.querySelectorAll('.soft-item').forEach((el,i)=>{
+        setTimeout(()=>{
+          el.style.opacity='1';
+          el.style.transform='translateX(0)';
+        }, i*80);
+      });
+      softObs.unobserve(entries[0].target);
+    }
+  },{threshold:.05});
+  const softWrap = document.querySelector('.skills-cols');
+  if(softWrap){
+    softWrap.querySelectorAll('.soft-item').forEach(el=>{
+      el.style.opacity='0';
+      el.style.transform='translateX(-14px)';
+      el.style.transition='opacity .4s ease, transform .4s ease, border-color .25s';
+    });
+    softObs.observe(softWrap);
+  }
+
+})();
+
 </script>
 </body>
 </html>
