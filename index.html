@@ -489,7 +489,7 @@ section[id] { scroll-margin-top:80px; }
   background:linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 .pentest-full:hover { transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,0,0,.4); }
-.pt-num { font-family:var(--serif); font-size:6rem; font-weight:300; color:rgba(200,169,110,.07); line-height:1; }
+.pt-num { font-family:var(--serif); font-size:6rem; font-weight:300; color:rgba(200,169,110,.07); line-height:1; flex-shrink:0; }
 .pt-body { flex:1; }
 .pt-cat { font-family:var(--mono); font-size:.58rem; letter-spacing:.25em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; }
 .pt-title { font-family:var(--serif); font-size:1.6rem; font-weight:400; line-height:1.2; margin-bottom:1rem; color:var(--paper); }
@@ -571,19 +571,19 @@ section[id] { scroll-margin-top:80px; }
 /* ── CERTIFICATIONS ── */
 .certs-wrap { border-top:1px solid var(--border); }
 .cert-item {
-  display:grid; grid-template-columns:50px 1fr auto;
-  gap:2rem; align-items:center;
-  padding:1.6rem 0; border-bottom:1px solid var(--border2);
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:1rem; padding:1.4rem 0; border-bottom:1px solid var(--border2);
   transition:background .25s, padding-left .25s; cursor:default;
 }
 .cert-item:hover { background:var(--ink3); padding-left:.8rem; border-radius:4px; }
-.cert-n { font-family:var(--serif); font-size:1.4rem; font-weight:300; color:var(--dim3); text-align:center; }
-.cert-info {}
-.cert-name { font-size:.95rem; font-weight:500; margin-bottom:.2rem; color:var(--paper); }
-.cert-meta { font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; color:var(--dim2); }
+.cert-n { font-family:var(--serif); font-size:1.2rem; font-weight:300; color:var(--dim3); flex-shrink:0; width:36px; text-align:center; padding-top:.15rem; }
+.cert-info { flex:1; min-width:0; }
+.cert-name { font-size:.9rem; font-weight:500; margin-bottom:.2rem; color:var(--paper); word-break:break-word; overflow-wrap:break-word; }
+.cert-meta { font-family:var(--mono); font-size:.6rem; letter-spacing:.08em; color:var(--dim2); word-break:break-word; }
 .cert-status {
-  font-family:var(--mono); font-size:.55rem; letter-spacing:.15em;
-  text-transform:uppercase; padding:.3rem .85rem; border-radius:2px; white-space:nowrap;
+  font-family:var(--mono); font-size:.55rem; letter-spacing:.1em;
+  text-transform:uppercase; padding:.28rem .65rem; border-radius:2px;
+  white-space:nowrap; flex-shrink:0; align-self:flex-start;
 }
 .cs-v { color:#4ade80; border:1px solid rgba(74,222,128,.25); background:rgba(74,222,128,.06); }
 .cs-a { color:var(--accent2); border:1px solid rgba(0,194,255,.25); background:rgba(0,194,255,.06); }
@@ -882,10 +882,10 @@ footer { padding:2.5rem 3.5rem; border-top:1px solid var(--border); background:v
   .ach-l { font-size:.5rem; }
 
   /* certs */
-  .cert-item { padding:1rem .5rem; }
+  .cert-item { padding:1rem .8rem; gap:.7rem; }
   .cert-n { display:none; }
-  .cert-name { font-size:.85rem; }
-  .cert-meta { font-size:.6rem; }
+  .cert-name { font-size:.82rem; }
+  .cert-meta { font-size:.58rem; letter-spacing:.04em; }
 
   /* contact */
   .contact-wrap { padding:2rem 1.2rem; border-radius:12px; }
@@ -917,7 +917,8 @@ footer { padding:2.5rem 3.5rem; border-top:1px solid var(--border); background:v
   .ach-band { grid-template-columns:1fr; }
   .ach-item { border-right:none; border-bottom:1px solid var(--border); }
   .ach-item:last-child { border-bottom:none; }
-  .cert-item { grid-template-columns:1fr auto; gap:.8rem; }
+  .cert-item { flex-direction:column; gap:.5rem; padding:.9rem .8rem; background:var(--ink3); border-radius:6px; border-bottom:none; margin-bottom:.5rem; }
+  .cert-status { align-self:flex-start; }
   .contact-grid { gap:2rem; }
   .hero-stats { grid-template-columns:repeat(3,1fr); }
   .footer-nav { gap:.7rem; }
@@ -1109,6 +1110,291 @@ footer.in { opacity:1; transform:translateY(0); }
   .cert-item::before { display:none; }
   .cert-item { border-left:2px solid transparent;transition:border-color .25s,padding .25s,background .25s; }
   .cert-item:active { border-left-color:var(--gold); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   3D & INTERACTION LAYER — GPU composited only
+   Works on both desktop & phone at 60fps
+═══════════════════════════════════════════════════════════ */
+
+/* ── HOLOGRAPHIC CARD SHEEN ── */
+.holo-card {
+  position:relative; overflow:hidden;
+  transform-style:preserve-3d;
+}
+.holo-card::before {
+  content:'';
+  position:absolute; inset:0; z-index:3;
+  background:linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(200,169,110,.04) 30%,
+    rgba(79,111,255,.06) 50%,
+    rgba(0,194,255,.04) 70%,
+    transparent 100%
+  );
+  background-size:200% 200%;
+  animation:holoSheen 6s ease-in-out infinite;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .4s;
+}
+.holo-card:hover::before,
+.holo-card:focus-within::before { opacity:1; }
+
+@keyframes holoSheen {
+  0%   { background-position:200% 200%; }
+  50%  { background-position:0% 0%; }
+  100% { background-position:200% 200%; }
+}
+
+/* ── 3D FLOATING ELEMENTS IN HERO ── */
+.hero-3d-ring {
+  position:absolute; border-radius:50%;
+  border:1px solid rgba(79,111,255,.15);
+  pointer-events:none; z-index:1;
+  animation:ring3DFloat linear infinite;
+  transform-style:preserve-3d;
+}
+.hero-3d-ring:nth-child(1){ width:420px;height:420px;top:5%;right:3%;animation-duration:22s;border-color:rgba(79,111,255,.12); }
+.hero-3d-ring:nth-child(2){ width:280px;height:280px;top:15%;right:10%;animation-duration:16s;animation-delay:-6s;border-color:rgba(0,194,255,.09); }
+.hero-3d-ring:nth-child(3){ width:180px;height:180px;top:30%;right:5%;animation-duration:12s;animation-delay:-3s;border-color:rgba(200,169,110,.1); }
+@keyframes ring3DFloat {
+  0%  { transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+  33% { transform:rotateX(20deg) rotateY(15deg) rotateZ(5deg); }
+  66% { transform:rotateX(-10deg) rotateY(-20deg) rotateZ(-8deg); }
+  100%{ transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+}
+@media(max-width:768px){
+  .hero-3d-ring:nth-child(1){ width:260px;height:260px; }
+  .hero-3d-ring:nth-child(2){ width:180px;height:180px; }
+  .hero-3d-ring:nth-child(3){ display:none; }
+}
+
+/* ── FLOATING DATA BADGES in hero ── */
+.data-badge {
+  position:absolute; z-index:4;
+  background:rgba(6,6,8,.88);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(79,111,255,.2);
+  border-radius:8px; padding:.6rem 1.1rem;
+  font-family:var(--mono); font-size:.56rem;
+  letter-spacing:.15em; text-transform:uppercase;
+  color:var(--dim); pointer-events:none;
+  display:flex; align-items:center; gap:.6rem;
+}
+.data-badge .db-dot { width:5px;height:5px;border-radius:50%;flex-shrink:0; }
+.db-1 { top:22%;left:5%;animation:badgeFloat1 7s ease-in-out infinite; }
+.db-2 { bottom:28%;right:8%;animation:badgeFloat2 9s ease-in-out infinite; }
+@keyframes badgeFloat1 {
+  0%,100%{ transform:translateY(0) rotate(0deg); }
+  50%    { transform:translateY(-12px) rotate(1deg); }
+}
+@keyframes badgeFloat2 {
+  0%,100%{ transform:translateY(0) rotate(0deg); }
+  50%    { transform:translateY(10px) rotate(-1deg); }
+}
+@media(max-width:768px){
+  .db-1 { top:auto;bottom:12%;left:4%;font-size:.5rem; }
+  .db-2 { bottom:22%;right:4%;font-size:.5rem; }
+}
+
+/* ── TYPEWRITER TERMINAL CURSOR (enhanced) ── */
+#hero-typed { border-right:none; }
+.t-cursor::after { color:var(--gold); font-weight:300; }
+
+/* ── ROTATING CUBE (hero, desktop only) ── */
+.scene-3d {
+  position:absolute; right:8%;top:50%;
+  transform:translateY(-50%);
+  perspective:600px; z-index:2;
+  pointer-events:none;
+}
+.cube-3d {
+  width:120px; height:120px;
+  transform-style:preserve-3d;
+  animation:cubeRotate3D 18s linear infinite;
+}
+.cube-face {
+  position:absolute; width:120px;height:120px;
+  border:1px solid rgba(79,111,255,.2);
+  background:rgba(79,111,255,.02);
+}
+.cube-face.front  { transform:translateZ(60px); }
+.cube-face.back   { transform:rotateY(180deg) translateZ(60px); }
+.cube-face.left   { transform:rotateY(-90deg) translateZ(60px); }
+.cube-face.right  { transform:rotateY(90deg) translateZ(60px); }
+.cube-face.top    { transform:rotateX(90deg) translateZ(60px); }
+.cube-face.bottom { transform:rotateX(-90deg) translateZ(60px); }
+@keyframes cubeRotate3D {
+  0%  { transform:rotateX(10deg) rotateY(0deg); }
+  100%{ transform:rotateX(10deg) rotateY(360deg); }
+}
+@media(max-width:1024px){ .scene-3d { display:none; } }
+
+/* ── SECTION DIVIDER — animated gradient line ── */
+.sect-divider {
+  height:1px; margin:0;
+  background:linear-gradient(90deg,
+    transparent 0%, var(--gold) 20%,
+    var(--accent) 50%, var(--accent2) 80%,
+    transparent 100%);
+  background-size:200% 100%;
+  animation:dividerFlow 4s linear infinite;
+  opacity:.3;
+}
+@keyframes dividerFlow {
+  0%  { background-position:200% 0; }
+  100%{ background-position:-200% 0; }
+}
+
+/* ── SKILL ITEM 3D HOVER ── */
+.skill-item {
+  transition:transform .25s cubic-bezier(.22,1,.36,1),
+             background .25s, border-color .25s,
+             padding-left .25s;
+}
+.skill-item:hover {
+  transform:translateX(6px);
+  border-bottom-color:rgba(200,169,110,.25);
+  color:var(--paper);
+}
+@media(max-width:768px){
+  .skill-item:hover { transform:none; }
+  .skill-item:active { background:rgba(200,169,110,.04); border-radius:4px; }
+}
+
+/* ── CERT ITEM 3D LIFT ── */
+@media(max-width:480px){
+  .cert-item { transition:transform .2s cubic-bezier(.22,1,.36,1), box-shadow .2s; }
+  .cert-item:active { transform:scale(.98); box-shadow:0 4px 16px rgba(0,0,0,.3); }
+}
+
+/* ── PROFILE CARD — layered 3D depth ── */
+.profile-card {
+  transform-style:preserve-3d;
+}
+.profile-card .profile-img-wrap {
+  transform:translateZ(8px);
+}
+.profile-card .profile-info {
+  transform:translateZ(4px);
+}
+
+/* ── STAT BLOCKS — 3D hover ── */
+.stat-item {
+  transition:transform .3s cubic-bezier(.22,1,.36,1),
+             box-shadow .3s, border-color .3s;
+}
+.stat-item:hover {
+  transform:translateY(-6px) scale(1.03);
+  box-shadow:0 12px 32px rgba(0,0,0,.35),
+             0 0 0 1px rgba(200,169,110,.18);
+}
+@media(max-width:768px){
+  .stat-item:hover { transform:none; box-shadow:none; }
+  .stat-item:active { transform:scale(.97); transition:transform .1s; }
+}
+
+/* ── TL ITEM — 3D depth on hover ── */
+.tl-card:hover {
+  transform:translateX(6px) perspective(400px) rotateY(-1deg);
+}
+@media(max-width:768px){
+  .tl-card:hover { transform:none; }
+}
+
+/* ── ACH ITEM — 3D float up ── */
+.ach-item {
+  transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s;
+}
+.ach-item:hover {
+  transform:translateY(-10px) perspective(400px) rotateX(3deg);
+  box-shadow:0 20px 50px rgba(0,0,0,.45);
+}
+@media(max-width:768px){
+  .ach-item:hover { transform:none; }
+  .ach-item:active { transform:scale(.97); transition:transform .12s; }
+}
+
+/* ── MOBILE TOUCH PULSE ── */
+@keyframes touchPulse {
+  0%  { box-shadow:0 0 0 0 rgba(200,169,110,.4); }
+  70% { box-shadow:0 0 0 12px rgba(200,169,110,0); }
+  100%{ box-shadow:0 0 0 0 rgba(200,169,110,0); }
+}
+.touch-pulsed { animation:touchPulse .6s ease-out; }
+
+/* ── NEON GLOW on key numbers ── */
+@keyframes neonFlicker {
+  0%,95%,100%{ text-shadow:0 0 8px rgba(200,169,110,.4); }
+  96%        { text-shadow:0 0 20px rgba(200,169,110,.8), 0 0 40px rgba(200,169,110,.3); }
+  98%        { text-shadow:0 0 4px rgba(200,169,110,.2); }
+}
+.stat-n { animation:neonFlicker 8s infinite; }
+
+/* ── CONTACT WRAP 3D FLOAT ── */
+.contact-wrap {
+  transition:transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s;
+}
+.contact-wrap:hover {
+  transform:perspective(1200px) rotateX(1deg) translateY(-4px);
+  box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(200,169,110,.1);
+}
+@media(max-width:768px){ .contact-wrap:hover{transform:none;} }
+
+/* ── SLIDE-IN INDICATORS for phone ── */
+@media(max-width:768px){
+  /* Show swipe hint on project track */
+  .projects-track::after {
+    content:''; position:absolute; right:0; top:0; bottom:0;
+    width:40px;
+    background:linear-gradient(to right,transparent,var(--ink2));
+    pointer-events:none; z-index:10;
+  }
+}
+
+/* ── FLOATING DOTS decoration ── */
+.float-dots {
+  position:absolute; inset:0; overflow:hidden;
+  pointer-events:none; z-index:0;
+}
+.float-dots span {
+  position:absolute; border-radius:50%;
+  background:var(--gold); opacity:0;
+  animation:dotFloat linear infinite;
+}
+@keyframes dotFloat {
+  0%  { transform:translateY(100%) scale(0); opacity:0; }
+  10% { opacity:.4; }
+  90% { opacity:.2; }
+  100%{ transform:translateY(-120%) scale(1); opacity:0; }
+}
+
+/* ── HERO H1 shimmer on mobile ── */
+@media(max-width:768px){
+  .h1-name {
+    animation:mobileNameShimmer 5s ease-in-out infinite;
+  }
+  @keyframes mobileNameShimmer {
+    0%,100%{ opacity:1; }
+    50%    { opacity:.88; }
+  }
+}
+
+/* ── SCROLL PROGRESS GLOW ── */
+#progress {
+  box-shadow:0 0 8px var(--gold), 0 0 16px rgba(200,169,110,.3);
+  background:linear-gradient(90deg,var(--gold),var(--accent2));
+}
+
+/* ── MOBILE: project cards swipe indicator ── */
+.proj-drag-hint {
+  animation:hintBounce 2s ease-in-out infinite;
+}
+@keyframes hintBounce {
+  0%,100%{ transform:translateX(0); }
+  50%    { transform:translateX(5px); }
 }
 
 </style>
@@ -1520,6 +1806,279 @@ window.addEventListener('load',()=>{
   }, 3000);
 },{once:true});
 
+
+/* ═══════════════════════════════════════════════════════════
+   3D INTERACTION ENGINE v2
+   Composited-only, 60fps on phone & desktop
+═══════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+var isTch = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+var RAF = requestAnimationFrame;
+var $ = function(s){ return document.querySelector(s); };
+var $$ = function(s){ return document.querySelectorAll(s); };
+
+/* ─── 1. ADD 3D RINGS + CUBE + FLOATING BADGES TO HERO ─── */
+(function(){
+  var hero = $('#hero'); if(!hero) return;
+
+  // 3D rotating rings
+  for(var i=0;i<3;i++){
+    var ring = document.createElement('div');
+    ring.className = 'hero-3d-ring';
+    hero.appendChild(ring);
+  }
+
+  // Rotating cube (desktop only)
+  if(!isTch){
+    var scene = document.createElement('div');
+    scene.className = 'scene-3d';
+    var cube = document.createElement('div');
+    cube.className = 'cube-3d';
+    ['front','back','left','right','top','bottom'].forEach(function(face){
+      var f = document.createElement('div');
+      f.className = 'cube-face '+face;
+      cube.appendChild(f);
+    });
+    scene.appendChild(cube);
+    hero.appendChild(scene);
+  }
+
+  // Floating data badges
+  var badges = [
+    {text:'CTF / Pentest', color:'#4ade80', pos:'db-1'},
+    {text:'GentlemanNASA', color:'#4f6fff', pos:'db-2'},
+  ];
+  badges.forEach(function(b){
+    var el = document.createElement('div');
+    el.className = 'data-badge '+b.pos;
+    el.innerHTML = '<span class="db-dot" style="background:'+b.color+';box-shadow:0 0 6px '+b.color+'"></span>'+b.text;
+    hero.appendChild(el);
+  });
+
+  // Floating dots decoration
+  var dots = document.createElement('div');
+  dots.className = 'float-dots';
+  for(var i=0;i<12;i++){
+    var d = document.createElement('span');
+    var size = Math.random()*3+1.5;
+    d.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+(Math.random()*100)+'%;'
+      +'animation-duration:'+(8+Math.random()*8)+'s;animation-delay:-'+(Math.random()*10)+'s;';
+    dots.appendChild(d);
+  }
+  hero.appendChild(dots);
+})();
+
+/* ─── 2. ADD ANIMATED DIVIDERS between sections ─── */
+(function(){
+  $$('section.sect').forEach(function(sect){
+    var div = document.createElement('div');
+    div.className = 'sect-divider';
+    sect.parentNode.insertBefore(div, sect);
+  });
+})();
+
+/* ─── 3. HOLO CLASS on all cards ─── */
+(function(){
+  $$('.proj-card,.lead-card-new,.profile-card,.tl-card,.ach-item,.contact-wrap').forEach(function(el){
+    el.classList.add('holo-card');
+  });
+})();
+
+/* ─── 4. GYROSCOPE tilt on mobile ─── */
+if(isTch && window.DeviceOrientationEvent){
+  var gyroCards = $$('.proj-card,.lead-card-new');
+  window.addEventListener('deviceorientation', function(e){
+    var tiltX = Math.max(-15, Math.min(15, e.gamma||0));
+    var tiltY = Math.max(-10, Math.min(10, (e.beta||0)-45));
+    gyroCards.forEach(function(c){
+      var r = c.getBoundingClientRect();
+      // Only apply to visible cards
+      if(r.top > -r.height && r.top < window.innerHeight){
+        c.style.transform = 'perspective(700px) rotateY('+(tiltX*.3)+'deg) rotateX('+(-tiltY*.2)+'deg)';
+      }
+    });
+  }, {passive:true});
+}
+
+/* ─── 5. TOUCH HAPTIC PULSE on interactive elements ─── */
+if(isTch){
+  $$('.proj-card,.lead-card-new,.ach-item,.stat-item,.cert-item,.soc-item').forEach(function(el){
+    el.addEventListener('touchstart', function(){
+      this.classList.remove('touch-pulsed');
+      var self = this;
+      RAF(function(){
+        RAF(function(){
+          self.classList.add('touch-pulsed');
+        });
+      });
+      if(navigator.vibrate) navigator.vibrate(8); // micro-haptic
+    },{passive:true});
+    el.addEventListener('touchend', function(){
+      var self = this;
+      setTimeout(function(){ self.classList.remove('touch-pulsed'); }, 700);
+    },{passive:true});
+  });
+}
+
+/* ─── 6. PARALLAX on scroll (desktop only, GPU-safe) ─── */
+if(!isTch){
+  var parallaxEls = [
+    {el:$('.hero-3d-ring'), speed:.15},
+  ];
+  var lastSY = 0;
+  window.addEventListener('scroll', function(){
+    var sy = window.scrollY;
+    if(Math.abs(sy - lastSY) < 2) return;
+    lastSY = sy;
+    $$('.hero-3d-ring').forEach(function(el,i){
+      var spd = [.12, .18, .08][i] || .1;
+      el.style.transform = 'translateY('+sy*spd+'px)';
+    });
+  },{passive:true});
+}
+
+/* ─── 7. MAGNETIC CURSOR on project cards (desktop) ─── */
+if(!isTch){
+  $$('.proj-card').forEach(function(card){
+    var shine = document.createElement('div');
+    shine.style.cssText = 'position:absolute;inset:0;border-radius:4px;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(200,169,110,.1) 0%,transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none;z-index:2;';
+    card.appendChild(shine);
+
+    card.addEventListener('mousemove', function(e){
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX-r.left)/r.width, y = (e.clientY-r.top)/r.height;
+      var rx = (x-.5)*12, ry = (y-.5)*-8;
+      card.style.transform = 'perspective(700px) rotateY('+rx+'deg) rotateX('+ry+'deg) translateZ(12px)';
+      shine.style.setProperty('--mx',(x*100)+'%');
+      shine.style.setProperty('--my',(y*100)+'%');
+      shine.style.opacity = '1';
+    });
+    card.addEventListener('mouseleave', function(){
+      card.style.transform = '';
+      shine.style.opacity = '0';
+    });
+  });
+
+  // Lead cards
+  $$('.lead-card-new').forEach(function(card){
+    card.addEventListener('mousemove', function(e){
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX-r.left)/r.width-.5, y = (e.clientY-r.top)/r.height-.5;
+      card.style.transform = 'perspective(600px) rotateY('+(x*10)+'deg) rotateX('+(-y*8)+'deg) translateZ(10px)';
+    });
+    card.addEventListener('mouseleave', function(){ card.style.transform=''; });
+  });
+}
+
+/* ─── 8. GLITCH on name (enhanced, random) ─── */
+(function(){
+  var h1 = $$('.h1-name');
+  if(!h1.length) return;
+  function glitch(){
+    var el = h1[Math.floor(Math.random()*h1.length)];
+    el.style.transform = 'translateX('+(Math.random()*4-2)+'px)';
+    el.style.filter = 'hue-rotate('+(Math.random()*20)+'deg)';
+    setTimeout(function(){
+      el.style.transform = '';
+      el.style.filter = '';
+    }, 80);
+    setTimeout(glitch, 3000 + Math.random()*5000);
+  }
+  setTimeout(glitch, 2000);
+})();
+
+/* ─── 9. INTERSECTION-based 3D entrance per section ─── */
+(function(){
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el = e.target;
+      // Stagger children with 3D entrance
+      var kids = el.querySelectorAll('.skill-item,.soft-item,.tl-item,.cert-item,.soc-item');
+      kids.forEach(function(k,i){
+        k.style.opacity='0';
+        k.style.transform='translateY(22px)';
+        k.style.transition='opacity .5s '+(i*.06)+'s cubic-bezier(.22,1,.36,1),transform .5s '+(i*.06)+'s cubic-bezier(.22,1,.36,1)';
+        RAF(function(){
+          RAF(function(){
+            k.style.opacity='1';
+            k.style.transform='none';
+          });
+        });
+      });
+      obs.unobserve(el);
+    });
+  },{threshold:.1});
+
+  $$('#skills,#experience,#certifications,#contact').forEach(function(s){
+    obs.observe(s);
+  });
+})();
+
+/* ─── 10. LIVE CLOCK in hero badge (optional flair) ─── */
+(function(){
+  var badge = document.querySelector('.hero-eyebrow');
+  if(!badge) return;
+  var clockEl = document.createElement('span');
+  clockEl.style.cssText = 'font-family:var(--mono);font-size:.52rem;color:var(--gold);margin-left:.5rem;';
+  badge.appendChild(clockEl);
+  function tick(){
+    var d = new Date();
+    clockEl.textContent = d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',timeZone:'Africa/Accra'}) + ' GMT';
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+/* ─── 11. SCROLL VELOCITY — speed-based blur ─── */
+if(!isTch){
+  var lastY=0, lastT=0, blurActive=false;
+  window.addEventListener('scroll', function(){
+    var now=Date.now(), sy=window.scrollY;
+    var vel=Math.abs(sy-lastY)/Math.max(1,now-lastT);
+    lastY=sy; lastT=now;
+    if(vel>2.5 && !blurActive){
+      blurActive=true;
+      document.body.style.filter='blur(.4px)';
+      setTimeout(function(){ document.body.style.filter=''; blurActive=false; },120);
+    }
+  },{passive:true});
+}
+
+/* ─── 12. CERT ITEMS — stagger slide in ─── */
+(function(){
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var items = e.target.querySelectorAll('.cert-item');
+      items.forEach(function(item, i){
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-20px)';
+        item.style.transition = 'opacity .45s '+(i*.055)+'s cubic-bezier(.22,1,.36,1), transform .45s '+(i*.055)+'s cubic-bezier(.22,1,.36,1)';
+        setTimeout(function(){
+          item.style.opacity = '1';
+          item.style.transform = 'none';
+        }, i*55+100);
+      });
+      obs.unobserve(e.target);
+    });
+  },{threshold:.1});
+  var certSect = document.getElementById('certifications');
+  if(certSect) obs.observe(certSect);
+})();
+
+/* ─── CLEANUP ─── */
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    $$('.sr.in,.holo-card').forEach(function(el){
+      el.style.willChange = 'auto';
+    });
+  }, 4000);
+},{once:true});
+
+})();
+
 </script><script>
 /* ═══ CURSOR ═══ */
 const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring'),label=document.getElementById('cur-label');
@@ -1921,12 +2480,7 @@ if(!isTouch){
 document.querySelectorAll('.cert-item,.soft-item').forEach(function(el){
   el.style.opacity=''; el.style.transform=''; el.style.transition='';
 });
-window.addEventListener('load',function(){
-  setTimeout(function(){document.querySelectorAll('.sr.in').forEach(function(el){el.style.willChange='auto';});},3000);
-},{once:true});
-
-})(); /* end IIFE */
-
+window.addEventListener},{once:true});
 </script>
 </body>
 </html>
