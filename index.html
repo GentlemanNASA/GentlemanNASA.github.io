@@ -104,7 +104,7 @@ body.hov-card #cur-ring{width:80px;height:80px;border-color:var(--gold)}
   -webkit-mask-image:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 100%);
   animation:gridScroll 10s linear infinite}
 @keyframes gridScroll{from{background-position:0 0}to{background-position:0 80px}}
-.hero-content{position:relative;z-index:3;width:100%;max-width:1200px}
+.hero-content{position:relative;z-index:10;width:100%;max-width:1200px;isolation:isolate}
 .hero-eyebrow{display:flex;align-items:center;gap:1.2rem;font-family:var(--mono);
   font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:2.5rem}
 .hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--gold);opacity:.6}
@@ -115,7 +115,7 @@ body.hov-card #cur-ring{width:80px;height:80px;border-color:var(--gold)}
 .h1-word:nth-child(2){animation-delay:.12s}
 .h1-word.italic{font-style:italic;color:var(--paper);opacity:.75}
 @keyframes lineReveal{from{transform:translateY(105%)}to{transform:translateY(0)}}
-.hero-sub{display:flex;align-items:flex-start;gap:5rem;border-top:1px solid var(--border);padding-top:2rem}
+.hero-sub{display:flex;align-items:flex-start;gap:5rem;border-top:1px solid var(--border);padding-top:2rem;position:relative;z-index:10}
 .hero-role{font-size:clamp(.85rem,1.2vw,.95rem);color:var(--dim);line-height:1.7;max-width:380px;font-weight:300}
 .t-cursor::after{content:'_';color:var(--gold);animation:blink .8s steps(1) infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
@@ -454,7 +454,7 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
 
 /* ═══ HERO PHOTO PANEL ═══ */
-.hero-photo-wrap{position:absolute;top:0;right:0;bottom:0;width:46%;z-index:2;pointer-events:none;overflow:hidden}
+.hero-photo-wrap{position:absolute;top:0;right:0;bottom:0;width:46%;z-index:1;pointer-events:none;overflow:hidden}
 .hero-photo-inner{position:relative;width:100%;height:100%}
 .hero-photo-img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;filter:contrast(1.05) saturate(1.15)}
 .hero-photo-grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(79,111,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(79,111,255,.06) 1px,transparent 1px);background-size:40px 40px;mix-blend-mode:overlay}
@@ -473,20 +473,20 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
 /* ═══ ANIMATIONS FX ═══ */
 #fx-canvas{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.6}
 .trail-dot{position:fixed;border-radius:50%;pointer-events:none;z-index:9996;transform:translate(-50%,-50%);background:var(--gold)}
-#hero-orb{position:absolute;z-index:1;pointer-events:none;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(79,111,255,.22) 0%,rgba(0,194,255,.07) 50%,transparent 70%);filter:blur(55px);transform:translate(-50%,-50%);will-change:left,top}
-.hero-3d-ring{position:absolute;border-radius:50%;pointer-events:none;z-index:1;border:1px solid rgba(79,111,255,.12);animation:ring3DFloat linear infinite;transform-style:preserve-3d}
+#hero-orb{position:absolute;z-index:0;pointer-events:none;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(79,111,255,.22) 0%,rgba(0,194,255,.07) 50%,transparent 70%);filter:blur(55px);transform:translate(-50%,-50%);will-change:left,top}
+.hero-3d-ring{position:absolute;border-radius:50%;pointer-events:none;z-index:0;border:1px solid rgba(79,111,255,.12);animation:ring3DFloat linear infinite;transform-style:preserve-3d}
 .hero-3d-ring:nth-child(1){width:420px;height:420px;top:5%;right:2%;animation-duration:22s}
 .hero-3d-ring:nth-child(2){width:270px;height:270px;top:15%;right:10%;animation-duration:16s;animation-delay:-7s;border-color:rgba(0,194,255,.08)}
 .hero-3d-ring:nth-child(3){width:160px;height:160px;top:32%;right:5%;animation-duration:11s;animation-delay:-3s;border-color:rgba(200,169,110,.1)}
 @keyframes ring3DFloat{0%{transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg)}33%{transform:rotateX(22deg) rotateY(16deg) rotateZ(6deg)}66%{transform:rotateX(-12deg) rotateY(-22deg) rotateZ(-9deg)}100%{transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg)}}
-.scene-3d{position:absolute;right:7%;top:50%;transform:translateY(-50%);perspective:600px;z-index:2;pointer-events:none}
+.scene-3d{position:absolute;right:7%;top:50%;transform:translateY(-50%);perspective:600px;z-index:0;pointer-events:none}
 .cube-3d{width:110px;height:110px;transform-style:preserve-3d;animation:cube3DSpin 18s linear infinite}
 .cube-face{position:absolute;width:110px;height:110px;border:1px solid rgba(79,111,255,.18);background:rgba(79,111,255,.02)}
 .cube-face.front{transform:translateZ(55px)}.cube-face.back{transform:rotateY(180deg) translateZ(55px)}
 .cube-face.left{transform:rotateY(-90deg) translateZ(55px)}.cube-face.right{transform:rotateY(90deg) translateZ(55px)}
 .cube-face.top{transform:rotateX(90deg) translateZ(55px)}.cube-face.bottom{transform:rotateX(-90deg) translateZ(55px)}
 @keyframes cube3DSpin{from{transform:rotateX(12deg) rotateY(0deg)}to{transform:rotateX(12deg) rotateY(360deg)}}
-.data-badge{position:absolute;z-index:4;background:rgba(6,6,8,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(79,111,255,.2);border-radius:8px;padding:.6rem 1.1rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);pointer-events:none;display:flex;align-items:center;gap:.6rem}
+.data-badge{position:absolute;z-index:2;background:rgba(6,6,8,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(79,111,255,.2);border-radius:8px;padding:.6rem 1.1rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);pointer-events:none;display:flex;align-items:center;gap:.6rem}
 .data-badge .db-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 .db-1{top:22%;left:5%;animation:badgeFloat1 7s ease-in-out infinite}
 .db-2{bottom:28%;right:8%;animation:badgeFloat2 9s ease-in-out infinite}
@@ -527,7 +527,7 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
   .contact-split{grid-template-columns:1fr;gap:3rem}
   .scene-3d{display:none}
   .hero-photo-wrap{display:none}
-  .hero-has-photo #hero{padding-right:3.5rem}
+  
 }
 
 @media(max-width:768px){
@@ -558,10 +558,8 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
   .hero-scroll{display:none}
   .hero-grid-floor{display:none}
   .hero-photo-wrap{display:none}
-  .hero-has-photo #hero{padding-right:1.2rem}
-  .data-badge{font-size:.5rem;padding:.45rem .8rem}
-  .db-1{top:auto;bottom:14%;left:4%}
-  .db-2{bottom:24%;right:4%}
+  
+  .data-badge{display:none}
   .hero-3d-ring:nth-child(1){width:200px;height:200px}
   .hero-3d-ring:nth-child(2){width:140px;height:140px}
   .hero-3d-ring:nth-child(3){display:none}
@@ -737,22 +735,7 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
 <main id="main-content">
 
 <!-- ══ HERO ══ -->
-<section id="hero" class="hero-has-photo">
-  <div class="hero-grid"></div>
-  <div class="hero-shape shape-ring"></div>
-  <div class="hero-shape shape-ring-2"></div>
-  <div class="hero-shape shape-line"></div>
-
-  <!-- 3D Rotating Cube -->
-  <div class="cube-wrap">
-    <div class="cube">
-      <div class="cube-face front"></div>
-      <div class="cube-face back"></div>
-      <div class="cube-face left"></div>
-      <div class="cube-face right"></div>
-      <div class="cube-face top"></div>
-      <div class="cube-face bottom"></div>
-    </div>
+<section id="hero">
   </div>
 
   <!-- HERO PHOTO PANEL -->
@@ -1084,7 +1067,7 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
 
 <button id="btt" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></button>
 
-<script>
+<script></script><script>
 /* ═══════════════════════════════════════════════════════
    PORTFOLIO ENGINE — nav, cursor, typewriter, drag, reveal
    + full interaction system — 60fps phone & desktop
@@ -1221,10 +1204,11 @@ window.addEventListener('scroll',updateNav,{passive:true});updateNav();
   // Floating orb
   var orb=document.createElement('div');orb.id='hero-orb';
   hero.style.position='relative';hero.appendChild(orb);
-  var tx=window.innerWidth/2,ty=window.innerHeight*.4,cx=tx,cy=ty;
+  var hc=document.querySelector('.hero-content');if(hc){hc.style.zIndex='20';}
+  var tx=window.innerWidth/2,ty=T?window.innerHeight*.78:window.innerHeight*.4,cx=tx,cy=ty;
   (function ol(){cx+=(tx-cx)*.035;cy+=(ty-cy)*.035;orb.style.left=cx+'px';orb.style.top=cy+'px';R(ol);})();
   if(!T){document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;},{passive:true});}
-  else{var ang=0;setInterval(function(){ang+=.01;tx=window.innerWidth/2+Math.cos(ang)*100;ty=window.innerHeight*.42+Math.sin(ang*1.3)*65;},20);}
+  else{var ang=0;setInterval(function(){ang+=.01;tx=window.innerWidth/2+Math.cos(ang)*70;ty=window.innerHeight*.8+Math.sin(ang*1.3)*35;},20);}
 })();
 
 /* ── 2. SECTION DIVIDERS ── */
@@ -1457,12 +1441,14 @@ if(!T){
 })();
 
 /* ── CLEANUP ── */
+window.addEventListener('load',fun
 window.addEventListener('load',function(){
   setTimeout(function(){document.querySelectorAll('.sr.in').forEach(function(el){el.style.willChange='auto';});},4000);
 },{once:true});
-
-})(); /* end interaction IIFE */
-
+// Reset any stale inline opacity
+document.querySelectorAll('.cert-item,.soft-item').forEach(function(el){
+  el.style.opacity=''; el.style.transform=''; el.style.transition='';
+});
 </script>
 </body>
 </html>
