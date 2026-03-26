@@ -537,7 +537,7 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
   .nav-links,.nav-cta{display:none}
   .nav-burger{display:flex}
   .marquee-strip{display:none}
-  #cur-dot,#cur-ring,#cur-label,.trail-dot{display:none}
+  #cur-dot,#cur-ring,#cur-label,.trail-dot,#fx-canvas{display:none}
   body{cursor:auto}
   a,button{cursor:pointer}
   /* ── sections ── */
@@ -547,11 +547,12 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
   .sect-desc{max-width:100%}
   .sect-title{font-size:2.2rem}
   /* ── hero ── */
-  #hero{padding:5.5rem 1.2rem 3.5rem;min-height:100svh}
+  #hero{display:block;padding:5.5rem 1.2rem 3.5rem;min-height:auto}
   .hero-h1{font-size:3rem;line-height:.94;margin-bottom:1.4rem}
   .hero-eyebrow{font-size:.56rem;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+  .hero-content{position:relative;z-index:5;width:100%}
   .hero-sub{flex-direction:column;gap:1.5rem;border-top:none;padding-top:1rem}
-  .hero-role{font-size:.9rem;max-width:100%}
+  .hero-role{font-size:.9rem;max-width:100%;position:relative;z-index:5}
   .hero-stats{margin-left:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--border);padding-top:1rem}
   .hero-stat-num{font-size:2rem}
   .hero-stat-label{font-size:.52rem}
@@ -560,10 +561,8 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
   .hero-photo-wrap{display:none}
   
   .data-badge{display:none}
-  .hero-3d-ring:nth-child(1){width:200px;height:200px}
-  .hero-3d-ring:nth-child(2){width:140px;height:140px}
-  .hero-3d-ring:nth-child(3){display:none}
-  #hero-orb{width:180px;height:180px}
+  .hero-3d-ring{display:none!important}
+  #hero-orb{display:none!important}
   /* ── about ── */
   .about-body p{font-size:.9rem;padding-left:1rem}
   .about-stats{grid-template-columns:repeat(3,1fr);gap:0}
@@ -736,7 +735,6 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
 
 <!-- ══ HERO ══ -->
 <section id="hero">
-  </div>
 
   <!-- HERO PHOTO PANEL -->
   <div class="hero-photo-wrap">
@@ -1067,7 +1065,7 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
 
 <button id="btt" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></button>
 
-<script></script><script>
+<script></script><script></script><script>
 /* ═══════════════════════════════════════════════════════
    PORTFOLIO ENGINE — nav, cursor, typewriter, drag, reveal
    + full interaction system — 60fps phone & desktop
@@ -1182,8 +1180,8 @@ window.addEventListener('scroll',updateNav,{passive:true});updateNav();
 /* ── 1. HERO ELEMENTS ── */
 (function(){
   var hero=document.getElementById('hero');if(!hero)return;
-  // 3D rings
-  for(var i=0;i<3;i++){var r=document.createElement('div');r.className='hero-3d-ring';hero.appendChild(r);}
+  // 3D rings — desktop only
+  if(!T){for(var i=0;i<3;i++){var r=document.createElement('div');r.className='hero-3d-ring';hero.appendChild(r);}}
   // Cube (desktop)
   if(!T){
     var sc=document.createElement('div');sc.className='scene-3d';
@@ -1445,7 +1443,7 @@ window.addEventListener('load',fun
 window.addEventListener('load',function(){
   setTimeout(function(){document.querySelectorAll('.sr.in').forEach(function(el){el.style.willChange='auto';});},4000);
 },{once:true});
-// Reset any stale inline opacity
+// Reset stale inline styles
 document.querySelectorAll('.cert-item,.soft-item').forEach(function(el){
   el.style.opacity=''; el.style.transform=''; el.style.transition='';
 });
