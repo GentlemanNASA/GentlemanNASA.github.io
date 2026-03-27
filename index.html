@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kurios_NASA — Samuel Allotey · Cybersecurity</title>
 <meta name="description" content="Allotey Samuel Nii Adotei — Cybersecurity student at GCTU. Cryptography, CTF, offensive security. 5 live GitHub projects.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#060608">
+<link rel="canonical" href="https://gentlemannasa.github.io/">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gentlemannasa.github.io/">
+<meta property="og:title" content="Kurios_NASA — Samuel Allotey · Cybersecurity">
+<meta property="og:description" content="Allotey Samuel Nii Adotei — Cybersecurity student at GCTU. Cryptography, CTF, offensive security. 5 live GitHub projects.">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kurios_NASA — Samuel Allotey · Cybersecurity">
+<meta name="twitter:description" content="Cybersecurity student at GCTU. Cryptography, CTF, offensive security. 5 live GitHub projects.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -461,7 +473,6 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
 .hero-photo-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.07) 2px,rgba(0,0,0,.07) 4px);pointer-events:none}
 .hero-photo-fade-left{position:absolute;top:0;left:0;bottom:0;width:55%;background:linear-gradient(to right,var(--ink) 0%,rgba(6,6,8,.7) 35%,transparent 100%)}
 .hero-photo-fade-bottom{position:absolute;left:0;right:0;bottom:0;height:35%;background:linear-gradient(to top,var(--ink) 0%,transparent 100%)}
-.hero-photo-scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.07) 2px,rgba(0,0,0,.07) 4px)}
 .hero-photo-corner{position:absolute;width:24px;height:24px;border-color:rgba(200,169,110,.55);border-style:solid}
 .hero-photo-corner.tl{top:2rem;left:2rem;border-width:1.5px 0 0 1.5px;animation:cornerPulse 3s ease-in-out infinite}
 .hero-photo-corner.tr{top:2rem;right:2rem;border-width:1.5px 1.5px 0 0;animation:cornerPulse 3s ease-in-out infinite .4s}
@@ -515,8 +526,6 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
 .sect-divider{height:1px;margin:0;background:linear-gradient(90deg,transparent,var(--gold),var(--accent2),transparent);background-size:200% 100%;animation:borderFlow 5s linear infinite;opacity:.2}
 @keyframes touchPulse{0%{box-shadow:0 0 0 0 rgba(200,169,110,.45)}70%{box-shadow:0 0 0 14px rgba(200,169,110,0)}100%{box-shadow:0 0 0 0 rgba(200,169,110,0)}}
 .touch-pulsed{animation:touchPulse .65s ease-out}
-.lead-card-new::after{content:'';position:absolute;top:-50%;left:-75%;width:50%;height:200%;background:linear-gradient(to right,transparent,rgba(200,169,110,.07),transparent);transform:skewX(-15deg);transition:left .6s cubic-bezier(.22,1,.36,1);pointer-events:none}
-.lead-card-new:hover::after{left:125%}
 
 /* ═══════════════════════════════
    RESPONSIVE — 5 clean blocks
@@ -709,7 +718,7 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
 </div>
 
 <!-- Mobile menu -->
-<div id="mob-menu" role="dialog" aria-label="Navigation">
+<div id="mob-menu" role="dialog" aria-label="Navigation" aria-modal="true">
   <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Work</a>
   <a href="#experience">Experience</a><a href="#leadership">Leadership</a>
   <a href="#certifications">Certs</a><a href="#contact">Contact</a>
@@ -1007,6 +1016,8 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
 <!-- ══ CONTACT ══ -->
 <section id="contact" class="sect sect-alt">
   <div class="contact-outer">
+    <div class="contact-glow"></div>
+    <div class="contact-wrap">
     <div class="contact-split">
       <div>
         <div class="sect-num">Contact</div>
@@ -1028,7 +1039,7 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
             <div class="soc-arrow">&nearr;</div>
           </a>
           <a href="mailto:alloteysamuelnii@gmail.com" class="soc-item">
-            <div class="soc-l"><div class="soc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="soc-name">Email</div><div class="soc-handle"><span class="__cf_email__" data-cfemail="42232e2e2d36273b31232f37272e2c2b2b02252f232b2e6c212d2f">[email&#160;protected]</span></div></div></div>
+            <div class="soc-l"><div class="soc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="soc-name">Email</div><div class="soc-handle">alloteysamuelnii@gmail.com</div></div></div>
             <div class="soc-arrow">&nearr;</div>
           </a>
           <a href="tel:+233256771814" class="soc-item">
@@ -1037,7 +1048,8 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
           </a>
         </div>
       </div>
-    </div>
+    </div><!-- /.contact-split -->
+    </div><!-- /.contact-wrap -->
     <div class="sig-block">
       <div class="sig-main">Kurios_NASA</div>
       <div class="sig-sub">Samuel Allotey &middot; Cybersecurity &middot; Accra, Ghana &middot; 2026</div>
@@ -1065,7 +1077,7 @@ footer{padding:2.5rem 3.5rem;border-top:1px solid var(--border);background:var(-
 
 <button id="btt" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></button>
 
-<script></script><script></script><script>
+<script>
 /* ═══════════════════════════════════════════════════════
    PORTFOLIO ENGINE — nav, cursor, typewriter, drag, reveal
    + full interaction system — 60fps phone & desktop
@@ -1439,7 +1451,6 @@ if(!T){
 })();
 
 /* ── CLEANUP ── */
-window.addEventListener('load',fun
 window.addEventListener('load',function(){
   setTimeout(function(){document.querySelectorAll('.sr.in').forEach(function(el){el.style.willChange='auto';});},4000);
 },{once:true});
